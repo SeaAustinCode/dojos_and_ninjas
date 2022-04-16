@@ -19,7 +19,7 @@ public class DojoController {
 	@Autowired
 	private DojosAndNinjasService dojosAndNinjasService;
 	
-	@RequestMapping(value={"/dojos/new","", "/"})
+	@RequestMapping(value={"/dojos/new"}) // (value={"/dojos/new","", "/"})
 	public String showCreateDojo(@ModelAttribute("dojo") Dojo dojo, Model model) {
 		
 		return "newdojo.jsp";

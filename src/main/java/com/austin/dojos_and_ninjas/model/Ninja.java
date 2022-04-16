@@ -11,29 +11,46 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 	@Table(name="ninjas")
 	public class Ninja {
+	
 	    @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
+	    
+	    @NotNull
+	    @Size(min = 1, max = 50, message = "first name is required for a ninja.")
 	    private String firstName;
+	    
+	    @NotNull
+	    @Size(min = 2, max = 50, message = "last name is required for a ninja.")
 	    private String lastName;
+	    
+	    @Min(1)
 	    private int age;
+	    
 	    @Column(updatable=false)
 	    private Date createdAt;
 	    private Date updatedAt;
 	    
-	    // use {dojo.id} in the form to pass 
+	    // MANY TO ONE - ONE dojo can have MANY ninjas 
 	    @ManyToOne(fetch = FetchType.LAZY)
 	    @JoinColumn(name="dojo_id")
 	    private Dojo dojo;
 	    
+	    // MANY TO ONE -- MANY ninjas made by ONE user
+	    @ManyToOne(fetch = FetchType.LAZY)
+	    @JoinColumn(name="user_id")
+	    private User userThatRegisteredNinja;
+	    
 	    // CONSTRUCTOR
 	    public Ninja() {}
 
-	    // GETTES AND SETTERS 
 		public Long getId() {
 			return id;
 		}
@@ -89,5 +106,18 @@ import javax.persistence.Table;
 		public void setDojo(Dojo dojo) {
 			this.dojo = dojo;
 		}
+
+		public User getUserThatRegisteredNinja() {
+			return userThatRegisteredNinja;
+		}
+
+		public void setUserThatRegisteredNinja(User userThatRegisteredNinja) {
+			this.userThatRegisteredNinja = userThatRegisteredNinja;
+		}
+
+	    // Getters and Setters 
+	    
+		
+	    
 	    
 	}
